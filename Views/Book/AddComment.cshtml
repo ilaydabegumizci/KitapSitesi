@@ -1,0 +1,53 @@
+﻿@model KitapSitesi.Models.Comment
+
+
+    <style>
+        .row5 {
+            text-align: center;
+            margin: 0 auto;
+
+        }
+
+            .row5 .col-md-4 {
+                display: inline-block;
+                vertical-align: middle;
+                float: none;
+            }
+
+    </style>
+
+
+    <h4 style="text-align:center">Yorum Yaz</h4>
+    <br />
+    <div class="row5">
+
+        <div class="col-md-4">
+
+            <form asp-action="AddComment">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group" style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                    <label asp-for="NickName" class="control-label">Adınız:</label>
+                    <input asp-for="NickName" class="form-control" />
+                    <span asp-validation-for="NickName" class="text-danger"></span>
+                </div>
+                <div class="form-group" >
+                    <label asp-for="CommentofUser" class="control-label">Görüşleriniz bizim için önemli:</label>
+                    <textarea asp-for="CommentofUser" class="form-control"
+                              rows="3"
+                              required></textarea>
+                    <span asp-validation-for="CommentofUser" class="text-danger"></span>
+                </div>
+                <div class="form-group" style="visibility: hidden;display:flex; flex-direction: row; justify-content: center; align-items: center" >
+                    <label asp-for="BookId" class="control-label"></label>
+                    <input asp-for="BookId" class="form-control" />
+                    <span asp-validation-for="BookId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Yorum Yaz" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+

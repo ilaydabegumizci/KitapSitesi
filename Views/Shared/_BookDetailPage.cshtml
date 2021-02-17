@@ -1,0 +1,96 @@
+﻿@model KitapSitesi.Models.Book
+
+
+<div style=" width: 50%; margin: 0 auto;">
+    <style>
+        dt {
+            float: left;
+            clear: left;
+            margin-right: 5px;
+            font-weight: bold;
+        }
+
+        dd {
+            margin-left: 0px;
+        }
+    </style>
+
+    <h2 style="text-align: center;">  @Html.DisplayFor(model => model.Name)</h2>
+    <hr />
+
+    <dl>
+
+        <div class="row" style=" width: 50%; margin: 0 auto;">
+            <dd class="col-sm-10">
+                <img src="@Html.DisplayFor(model => model.ImageUrl)" />
+            </dd>
+        </div>
+
+
+
+        <div class="row">
+            <dt>
+                Kitap Adı:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+        </div>
+
+        <div class="row">
+            <dt>
+                Yazar Adı:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Author)
+            </dd>
+        </div>
+
+        <div class="row">
+            <dt>
+                Kategori:
+            </dt>
+            <dd>
+                @ViewBag.item
+            </dd>
+        </div>
+
+        <div class="row">
+            <dt>
+                Açıklama:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+        </div>
+
+        <div class="row">
+            <dt>
+                Puan:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Rating)
+            </dd>
+
+        </div>
+        <div class="row">
+            <dt>
+                Fiyat:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+        </div>
+        <div class="row">
+            <dt>
+                İndirim tutarı:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Discount)
+            </dd>
+        </div>
+    </dl>
+</div>
+
+
+

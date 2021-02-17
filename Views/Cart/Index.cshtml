@@ -1,0 +1,70 @@
+﻿@model Cart
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br />
+<br />
+<br />
+<h1 style="margin-left:25px;">Sepetim</h1>
+<hr />
+@if (Model == null)
+{
+    <br />
+
+    <h4 style="margin-left: 25px;">Sepetiniz Boş</h4>
+    <br />
+    <br />
+    <a class="btn btn-lg btn-success" style="margin-left: 25px;" href="/Home/Index">Alışverişe devam et</a>
+}
+else
+{
+    <div class="container-fluid" style="padding:25px;">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Ürün Adı
+                    </th>
+                    <th>Ürün Fiyatı</th>
+                    <th>Adet</th>
+                    <th>Ara Toplam</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+                @foreach (var item in Model.Books)
+                {
+                    <tr>
+                        <td>@item.Book.Name</td>
+                        <td>@System.Math.Round((item.Book.Price * (decimal)(1 - item.Book.Discount)), 2)</td>
+                        <td>@item.Quantity</td>
+                        <td>@System.Math.Round((item.Book.Price * (decimal)(1 - item.Book.Discount) * item.Quantity), 2)</td>
+                        <td>
+                            <a class="btn" style="background:#b200ff" asp-action="DeleteBookFromCart" asp-controller="Cart" asp-route-id="@item.Book.Id">Sil</a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">Toplam Fiyat:</td>
+                    <td>@System.Math.Round(Model.GetTotalValue(), 2)  TL</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+
+        </table>
+
+
+        <a class="btn btn-lg " style="background:#00ff90" href="/Home/Index">Alışverişe devam et</a>
+        <a class="btn btn-lg " style="background:#b200ff" href="/Cart/PrevFinishShopping">Siparişi Tamamla</a>
+
+
+    </div>
+}
+
+@await Component.InvokeAsync("NewReleases")

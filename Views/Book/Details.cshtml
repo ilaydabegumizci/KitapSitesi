@@ -1,0 +1,28 @@
+﻿@model KitapSitesi.Models.Book
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<br>
+
+<partial name="_BookDetailPage" model="@Model" />
+
+<form style="text-align:center" asp-action="AddToCart" asp-controller="Cart" asp-route-id="@Model.Id" method="post">
+    <button type="submit" class="btn btn-primary">Sepete Ekle</button>
+</form>
+
+@{Comment c = new Comment() { BookId = Model.Id, Book = Model }; }
+<partial name="AddComment" model="@c" />
+
+@await Component.InvokeAsync("ShowComments", Model.Id)
+
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <div>
+        @Html.ActionLink("Kitabı Düzenle", "Edit", new { id = Model.Id }) |
+        <a asp-action="Index">Listeye Geri Dön</a>
+    </div>
+}

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<KitapSitesi.Models.Comment>
+
+<table class="table table-info table-bordered" style="border-collapse: separate !important; margin-left:5px;margin-right:5px;" >
+    <thead>
+        <tr>
+            <th>
+               Yorum Sahibi:
+            </th>
+            <th>
+               Yorum:
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.NickName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CommentofUser)
+            </td>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")) {
+            <td>
+                @Html.ActionLink("Yorumu Sil", "DeleteComment", new { id=item.Id})
+            </td>
+            }
+        </tr>
+}
+    </tbody>
+</table>

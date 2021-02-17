@@ -1,0 +1,29 @@
+﻿@model Book
+@{
+    var request = ViewContext.HttpContext.Request;
+    string returnUrlValue = request.QueryString.HasValue ? $"{request.Path}{request.QueryString}" : request.Path.Value;
+}
+<style>
+    /*
+    img {
+        width: 140px;
+        height: 204px;
+        object-fit: cover;
+    }*/
+</style>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<a asp-action="Details" asp-controller="Book" asp-route-id="@Model.Id" class="card" style="margin-left:15px;margin-bottom:5px">
+    <img src="@Model.ImageUrl" class="card-img-top" alt="Saat">
+
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text">@Model.Author</p>
+
+        <p class="card-text">@System.Math.Round(Model.Price, 2) TL yerine @System.Math.Round(Model.Price * (decimal)(1 - Model.Discount), 2) TL</p>
+        <form asp-action="AddToCart" asp-controller="Cart" asp-route-id="@Model.Id" method="post">
+            <input type="hidden" name="=" returnUrl" value="@returnUrlValue" />
+            <button type="submit" class="btn btn-primary">Sepete Ekle</button>
+        </form>
+
+    </div>
+</a>

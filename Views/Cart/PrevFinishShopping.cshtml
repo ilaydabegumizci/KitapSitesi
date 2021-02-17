@@ -1,0 +1,86 @@
+﻿@model KitapSitesi.Models.BookInCart
+
+@{
+    ViewData["Title"] = "PrevFinishShopping";
+}
+
+
+
+<br />
+<br />
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div style="  position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border: 5px solid #b200ff;
+        padding: 10px;
+    ">
+
+        <h1 style="padding-left:10px;">Siparişini tamamlamadan önce:</h1>
+        <div class="row" style="padding-left:10px;">
+            <div style="padding:10px;">
+                <form class="inline">
+                    <a class="btn btn-lg " href="/Account/Login" style="background:#00ff90">Giriş Yap</a>
+                </form>
+            </div>
+            <div style="padding:10px;">
+                <form class="inline">
+                    <a class="btn btn-lg " style="background:#b200ff" href="/Account/AddUser">Üye Ol</a>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+}
+
+else
+{
+    <div style="padding:10px">
+        <h1>Siparişinizi tamamlamak için ödeme ve adres bilgilerinizi girin:</h1>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="PrevFinishShopping">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Quantity" class="control-label">Kart Numarası:</label>
+                        <input type="number" class="form-control" />
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Quantity" class="control-label">Adres:</label>
+                        <input type="text" class="form-control" />
+                        <span asp-validation-for="Book" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <a class="btn btn-lg " style="background:#b200ff" href="/Cart/FinishShopping">Siparişi Tamamla</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Index">Sepete Geri Dön</a>
+    </div>
+
+}
+

@@ -1,0 +1,265 @@
+viewda javascript kullanabilmek için razor syntax @DateTime.Now.ToShortDateString()
+<br/> bi satýr boþuk býrakýr 
+@for(int i=1;i<10;i++)
+{
+@i
+}
+
+for each döngüsü:
+//süslü parentez ekleyerek, içindekilerin hepsinin kod olarak algýlanmasý gerektiðini belirtmiþ oldum
+@{
+var liste=new List<>(){"Ýzmir","Ýstanbul","Ankara"};
+}
+@foreach(var li in liste)
+{
+@li <br/>
+}
+
+
+//csharp nesne tanýmlama
+new Kitap(){ID=1,KitapAd="Alice Harikalar Diyarýnda",Yazar="Lewis Caroll"};
+
+//viewda gözükmesini istediðim deðerleri Iaction result fonksiyonunda bu þekilde viewa gönderebilirim
+return View(kitapListesi); 
+ Viewda þu þekilde kullanabilirim:
+ sayfanýn en üstüne @model List<ProjeAdý.Models.Kitap>
+
+ <table> //tablo oluþturur
+ @foreach(var k in Model)
+ {
+ <tr> //satýr
+ <td> //sütun
+ @k.ID
+ </td>
+  <td> //sütun
+ @k.KitapAd
+ </td>
+  <td> //sütun
+ @k.Yazar
+ </td>
+ </tr>
+ }
+ </table>
+
+ Viewbag kullanýmý:
+ Controller tarafýnda yazmýþ olduðumuz bir deðiþkeni view tarafýnda direk kullanmamýza olanak saðlýyor, tam tersi geçerli deðil.
+ public IActionResul Index()
+ {
+ Viewbag.deger="Viewbag denemesi";
+ return View();
+ }
+ View içerisinde direk:
+ <div>
+ @ViewBag.deger
+ </div>
+
+
+ Layout: Sitelerin sabit kalan alanlarý _Layout  gibi baþýna alt tire eklerenek layout yapýlýr. 
+ Layout dosyasýnýn içine 
+ hfkjdslfmglkfdgld
+ @RenderBody()
+ dersem örneðin bu layoutu alan sayfalar reder body yazan yazan yerde oluþucak.
+ View oluþtururken use layoutpage optionýný iþaretle ... týkla kullanmak istediðin layout dosyasýný seç
+
+ bootstrap ekleme:
+ wwwroot sað klik ekle istemci tarafý kiatblýðý twitter bootstrap
+ startup kýsmýna app.UseStaticFiles(); eklee
+ titleýn altýna <link href="/twitter/bootstrap... rel="stylesheet"/>
+ <table class="table table bordered">
+ <button class="btn btn-warning"></button>
+ sty
+ partial view yaptýktan sonra baþka sayfalarda çaðýrma:
+ @html.Partial("_PartialPage")
+
+ viewcomponent(partial viewden farký arada controller olmadan modele eriþim saðlanabiliyor):
+ yeni klasör oluþtur,ismi ViewComponents
+ yeni sýnýf ekle ör: yeni kitaplar 
+ using ...Models;
+ usingMicrosoft.AspNetCore.Mvc;
+
+ public class YeniKitaplar:ViewComponent{
+  public IViewComponenyResult Invoke(){
+  var kitaplistesi=new List<Book>
+  {
+  new Book(){}
+  new Book(){}
+  new Book(){}
+  }
+  };
+  return View(kitaplistesi);
+  }
+
+  daha sonra bu viewcomponentin çaðýrýlacaðý viewun içerisinde:
+  @await Component.InvokeAsync("YeniKitaplar")
++View/Shared/Components/YeniKitaplar/Default.cshtml View un olmasý lazým:
+@model IEnumarable<projeadý.Models.Book>
+
+<table class="table table-bordered"> //tablo oluþturur
+  <tr>
+ <td>  ID </td>
+  <td>  KitapAd </td>
+  <td>  Yazar </td>
+ </tr>
+
+ @foreach(var x in Model)
+ {
+ <tr> //satýr
+ <td>  @k.ID </td>
+  <td>  @k.KitapAd </td>
+  <td> @k.Yazar </td>
+ </tr>
+ }
+ </table>
+
+ viewstart (bizim için layoutu seçiyor): 
+ yeni view: razor view start
+ yeni oluþturduðun viewlarda tektek seçmene gerek yok use layout de biþey iþaretleme bu layout gelicek
+
+ layout kullanmak istemiyorsan: 
+ @{
+ layout=null;
+ }
+
+ html raw:
+ @{
+ var deger="<b> Kalýn Merhaba</b>" + "<p style =\"color:blue; font-weight:bold\"> Burasý 2.cümle </p>;
+ }
+ @Html.Raw(deger) 
+ eðer @deger deseydim stringi olduðu gibi basardý
+
+ viewlarda açýklama satýrý:
+ @* *@
+
+
+ //sidebar ekleme(w3 sitesinden aldý küçültmek için 25leri 15 yap resmi sil containera renderbody() ekle) :
+ database baðlantýsýný yaptýktan sonra (data klasörünün altýnda)
+ controller ekle CategoriesController
+ shared klasörüne ekle _Sidebar
+ categories controllerdaki Iactionresult indexine sað klik add view, view oluþtururken add layout _sidebarý ekle
+
+
+ //databaseden veri çekme:
+ model hazýr, baðlantý yapýldý, controllerýný ekle
+ controllerda ýactionresultýn üstüne dbContext c= new dbContext();
+ Iactionresult idex içine var degerler=c.books.ToList(); return View(degerler) sonra viewun baþýna 
+ @using KitapSitesi.Models
+ @model List<book>
+ @foreach(var x in Model){@x.bookName}
+ <a href="#" class="btn btn-default" style="background-color:#dee61d">Güncelle</a>
+
+ //yeni kitap ekleme:
+ 
+ [HttpGet] //sayfa açýlýrken çalýþýcak
+ public IActionResult YeniKitap()
+ {
+ return View();
+ }
+
+  [HttpPost] //yeni kitap eklendiðinde çalýþýcak(herhangi bir post iþlemi yapýldýðý zaman)
+ public IActionResult YeniKitap(book kitap)
+ {
+ c.books.Add(kitap);
+ c.SaveChanges();
+ return RedirectToAction("Index");
+
+ }
+
+ <a href="/books/newbook/" class="btn btn-primary">Yeni kitap</a>
+ yeni kitap view sayfasýnda:
+ @model projeadý.Models.Book
+
+ <form class="form-group" method="post">
+ burayý minishoptan bak
+ @Html.TextBoxFor(x=>x.bookName)
+ <button>Kitap ekle</button>
+ </form>
+
+ //kitap silme:
+ public IActionResult DeleteBook(int bookId){
+ var bookDel=c.books.Find(id);
+ c.books.Remove(bookDel);
+ c.SaveChanges();
+ return RedirectToAction("Index");
+
+ }
+ viewda(delete tuþunu baðlama):
+  <a href="/books/DeleteBook/@x.id" class="btn btn-primary">Yeni kitap</a>
+
+
+  //kitabý detaylý incele:
+  public IActionResult GetBook(int bookId){
+ var bookGet=c.books.Find(id);
+ return View(bookGet);
+  //?return View("GetBook",bookGet);
+ }
+ butonu baðla:
+ <a href="/books/GetBook/@x.id" class="btn btn-primary">Yeni kitap</a>
+ yeni viewda(GetBook) özel view eklersin:
+ @model KitapSitesi.Models.books
+
+ //kitap güncelle:(bunu minishoptan bak)
+   public IActionResult EditBook(book editBook){
+ var bookGet=c.books.Find(editBook.id);
+ bookGet.name=editBook.name;
+ bookGet.author=editBook.author;
+ c.SaveChanges();
+return RedirectToAction("Index");
+ }
+
+ //database update:
+ add-migration newMigName
+ update-database
+ 
+ //databasede iliþkiler:
+ 1 to many(bir kitabýn birden fazla yorumu bulunabilir veya bir kategoride bir sürü kitap bulunabilir):
+ kapsayýcý tarafa (1 tane olan kýsma)(1.örnek için kitap kapsayýcý) 
+ public IList<comment> Comments{get;set;}
+ many olan modele de kapsayýcýdan ekle:
+ class Comment{
+ public int BookID (!!)
+ public Book Book{get;set;} 
+ }
+ 
+
+ //iliþki olan durumda listeleme (örneðin kitaplarýn kategorileri var kitap özelliklerini listeliyorsun)
+  public IActionResult ListBooks(){
+ var books=c.books.Include(x=>x.Category).ToList();
+ return View(books);
+ }
+ @using KitapSitesi.Models
+ @List<Book>
+ view: @foreach(var x in Model){@x.Category.Name.ToString()}
+
+
+ //iliþki olan durumlarda silme:
+
+ //dropdown list:(yeni kitap ekleme)
+ 
+ [HttpGet] //sayfa açýlýrken çalýþýcak
+ public IActionResult YeniKitap()
+ {
+ List<SelectListItem> degerler=(from x in c.Categories.ToList() select new SelectListItem{Text=x.Name,Value=x.ID.ToString()}).ToList();
+ Viewbag.cats=degerler;
+ return View();
+ }
+
+ viewda:
+ @Html.DropDownListFor(x=>x.Category.ID,(List<SelectListItem>)ViewBag.cats,new {@class ="form-control"})
+
+
+  [HttpPost] //yeni kitap eklendiðinde çalýþýcak(herhangi bir post iþlemi yapýldýðý zaman) minishoptan bak
+ public IActionResult YeniKitap(book kitap)
+ {
+
+ }
+
+ //O kategorideki kitaplarý getir
+ categorycontroller
+ public IActionResult FromThisCategory(int id){
+ var books=c.Books.Where(x=>x.CategoryID==id).ToList();
+ var CategoryName=c.Categories.Where(x=>x.CategoryID==id).Select(y=>y.Name).FirstOrDefault();
+ return View(books);
+ }
+ view(kategory detaylarýna gidilirken):
+ <a href="/Category/Detail/@x.CategoryId"></a>
+

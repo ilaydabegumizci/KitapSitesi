@@ -1,0 +1,51 @@
+﻿
+@model KitapSitesi.Models.UserLoginModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<br />
+<br />
+<h1 style="margin-left: 150px;">Giriş Yap</h1>
+<hr />
+
+<div class="container-fluid " style="margin-top:5px; margin-left:150px;">
+
+
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Login" asp-route-returnUrl="@ViewBag.ReturnUrl">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="UserName" class="control-label">Kullanıcı Adı:</label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label">Şifre:</label>
+                    <input type="password"  asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" style="background:#b200ff" value="Giriş yap" class="btn " />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>
+        <hr />
+        <h4>
+            Henüz üye değil misiniz?
+        </h4>
+        <hr />
+        <a href="/Account/AddUser" class="inline">
+            <button class="btn" type="submit" style="background:#00ff90">Üye Ol</button>
+        </a>
+    </div>
+
+</div>
+
+@await Component.InvokeAsync("NewReleases")

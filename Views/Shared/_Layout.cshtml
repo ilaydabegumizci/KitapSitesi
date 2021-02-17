@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bibliotek</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .navbar {
+            margin-bottom: 0;
+            background-color: #d8a3ee;
+            z-index: 9999;
+            border: 0;
+            font-size: 15px !important;
+            line-height: 1.42857143 !important;
+            letter-spacing: 4px;
+            border-radius: 0;
+        }
+
+            .navbar li a, .navbar .navbar-brand {
+                color: #fff !important;
+            }
+
+        .navbar-nav li a:hover, .navbar-nav li.active a {
+            color: #d8a3ee !important;
+            background-color: #fff !important;
+        }
+
+        .navbar-default .navbar-toggle {
+            border-color: transparent;
+            color: #fff !important;
+        }
+
+        .container-fluid {
+            padding-right: 0;
+            padding-left: 0;
+            margin-right: auto;
+            margin-left: auto
+        }
+    </style>
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-dark fixed-top navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" style="background-color: #d8a3ee;">
+
+            <div class="navbar-collapse collapse w-100 order-0 order-md-0 dual-collapse2">
+                <ul class="navbar-nav mr-auto">
+
+                    <li class="navbar-brand" style="margin-top:3px;" asp-area="" asp-controller="Home" asp-action="Index">
+                        Medyatek
+                    </li>
+
+
+
+                    <li class="nav-item">
+                        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
+                    </li>
+
+
+
+                </ul>
+            </div>
+
+            <div class="navbar-collapse collapse w-100 order-0 order-md-0 dual-collapse2">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Kategoriler
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a style="background-color: #d8a3ee;" asp-controller="Book" asp-action="BooksByCategory" asp-route-categoryId=1>Araştırma-Tarih</a></li>
+                            <li><a style="background-color: #d8a3ee;" asp-controller="Book" asp-action="BooksByCategory" asp-route-categoryId=2>Anı</a></li>
+                            <li><a style="background-color: #d8a3ee;" asp-controller="Book" asp-action="BooksByCategory" asp-route-categoryId=3>Bilim Kurgu</a></li>
+                            <li><a style="background-color: #d8a3ee;" asp-controller="Book" asp-action="BooksByCategory" asp-route-categoryId=4>Biyografi</a></li>
+                            <li><a style="background-color: #d8a3ee;" asp-controller="Book" asp-action="BooksByCategory" asp-route-categoryId=5>Çizgi Roman</a></li>
+                            <li><a style="background-color: #d8a3ee;" asp-controller="Book" asp-action="BooksByCategory" asp-route-categoryId=6>Çocuk</a></li>
+                            <li><a style="background-color: #d8a3ee;" asp-controller="Book" asp-action="BooksByCategory" asp-route-categoryId=7>Dünya Edebiyatı</a></li>
+                            <li><a style="background-color: #d8a3ee;" asp-controller="Book" asp-action="BooksByCategory" asp-route-categoryId=8>Ders/Sınav Kitapları</a></li>
+                            <li><a style="background-color: #d8a3ee;" asp-controller="Book" asp-action="BooksByCategory" asp-route-categoryId=9>Felsefe</a></li>
+                            <li><a style="background-color: #d8a3ee;" asp-controller="Book" asp-action="BooksByCategory" asp-route-categoryId=10>Kişisel Gelişim</a></li>
+                            <li><a style="background-color: #d8a3ee;" asp-controller="Book" asp-action="BooksByCategory" asp-route-categoryId=11>Roman</a></li>
+                            <li><a style="background-color: #d8a3ee;" asp-controller="Book" asp-action="BooksByCategory" asp-route-categoryId=12>Sanat Tarihi</a></li>
+                            <li><a style="background-color: #d8a3ee;" asp-controller="Book" asp-action="BooksByCategory" asp-route-categoryId=13>Türk Edebiyatı</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="navbar-nav mr-auto">
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Book" asp-action="Index">Kitapları Düzenle</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+ 
+
+            <div class="navbar-collapse collapse w-100 order-2 order-md-0 dual-collapse2">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" >
+                        <a asp-area="" asp-controller="Cart" asp-action="Index"><span class="glyphicon glyphicon-shopping-cart"></span>Sepete Git  </a>
+                    </li>
+
+                    <li class="nav-item" ><a asp-area="" asp-controller="Account" asp-action="AddUser"><span class="glyphicon glyphicon-user"></span> Üye Ol  </a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+
+                        <li class="nav-item" ><a asp-area="" asp-controller="Account" asp-action="Logout"><span class="glyphicon glyphicon-log-out"></span> Çıkış Yap</a></li>
+
+                    }
+                    else
+                    {
+                        <li class="nav-item" ><a asp-area="" asp-controller="Account" asp-action="Login"><span class="glyphicon glyphicon-log-in"></span> Giriş Yap</a></li>
+                    }
+
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <br>
+    <br>
+
+    <div class="container-fluid" style="padding:0px;">
+        <main role="main" class="pb-3 w-100" style="background-color:powderblue;">
+            @RenderBody()
+        </main>
+    </div>
+
+
+
+    <footer class="border-top footer text-muted" style="        background-color: #d8a3ee;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        font-size: 15px;
+
+">
+        <div class="container" style=" color: #fff;
+
+    ">
+            &copy; 2021 - Medyatek - İlayda Begüm İzci - <a asp-area="" asp-controller="Home" asp-action="Privacy"> Gizlilik </a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
